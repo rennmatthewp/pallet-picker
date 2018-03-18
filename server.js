@@ -4,12 +4,10 @@ const app = express();
 
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
-app.use(express.static('public'))
+app.use(express.static('public'));
 
-// app.get('/', (request, response) => {
-//   response.sendFile()
-// })
+app.locals.title = 'Color Block';
 
 app.listen(app.get('port'), () => {
-  console.log(`Color Block server running on port ${app.get('port')}`);
+  console.log(`${app.locals.title} server running on port ${app.get('port')}`);
 });
