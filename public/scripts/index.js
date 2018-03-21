@@ -1,4 +1,47 @@
-document.querySelector('button').addEventListener('click', (e) => {
-  e.preventDefault();
-  alert('Button clicked!');
+
+const blocks = [
+  { color: '#FFF', locked: false },
+  { color: '#FFF', locked: false },
+  { color: '#FFF', locked: false },
+  { color: '#FFF', locked: false },
+  { color: '#FFF', locked: false }
+];
+
+const generateHexCode = () => {
+  const chars = '0123456789ABCDEF';
+  let hexCode = '#';
+  for (let i = 0; i < 6; i++) {
+    hexCode += chars[Math.floor(Math.random() * 16)];
+  }
+  return hexCode;
+};
+
+const generatePalette = () => {
+  blocks.forEach((block, index) => {
+    console.log('block', block)
+    if (block.locked === false) {
+      const hexCode = generateHexCode();
+      block.color = hexCode;
+      $(`.block-${index}`).css('background-color', hexCode);
+      $(`.block-${index}-hex`).text(hexCode);
+    }
+  });
+};
+
+const lockColor = event => {
+  console.log('lock', event, blocks[event.target.id])
+  blocks[event.target.id].locked = !blocks[event.target.id].locked;
+};
+
+
+$(document).keyup(e => {
+  if (e.which === 32) {
+    generatePalette();
+  }
+});
+
+
+$(document).ready(() => {
+  generatePalette();
+  $('.lock-icon').on('click', lockColor);
 });
