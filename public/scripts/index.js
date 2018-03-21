@@ -1,4 +1,3 @@
-
 const blocks = [
   { color: '#FFF', locked: false },
   { color: '#FFF', locked: false },
@@ -18,7 +17,6 @@ const generateHexCode = () => {
 
 const generatePalette = () => {
   blocks.forEach((block, index) => {
-    console.log('block', block)
     if (block.locked === false) {
       const hexCode = generateHexCode();
       block.color = hexCode;
@@ -28,11 +26,10 @@ const generatePalette = () => {
   });
 };
 
-const lockColor = event => {
-  console.log('lock', event, blocks[event.target.id])
-  blocks[event.target.id].locked = !blocks[event.target.id].locked;
+const lockColor = ({ target }) => {
+  blocks[target.id].locked = !blocks[target.id].locked;
+  console.log($(target));
 };
-
 
 $(document).keyup(e => {
   if (e.which === 32) {
@@ -40,8 +37,7 @@ $(document).keyup(e => {
   }
 });
 
-
+$('.lock-icon').on('click', lockColor);
 $(document).ready(() => {
   generatePalette();
-  $('.lock-icon').on('click', lockColor);
 });
