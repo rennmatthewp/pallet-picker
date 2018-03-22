@@ -4,24 +4,27 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('../knexfile')[environment];
 const database = require('knex')(configuration);
 
-router.get('/projects', (req, res) => {
+router.get('/projects', (request, response) => {
   database
     .select()
     .table('projects')
     .then(projects => {
-      res.status(200).json(projects);
+      response.status(200).json(projects);
+    })
+    .catch(err => {
+      console.log(err);
     });
 });
 
-router.post('/projects', (req, res) => {
+router.post('/projects', (request, response) => {
   database('projects')
-    .insert({ name: req.body.name }, 'id')
+    .insert(request.body , 'id')
     .then(project => {
-      res.status(201).json({ id: project[0] });
+      response.status(201).json({ id: project[0] });
     })
     .catch(err => {
       console.log('error', err);
-      res.status(500).json(err);
+      response.status(500).json(err);
     });
 });
 

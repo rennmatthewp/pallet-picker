@@ -28,7 +28,33 @@ const generatePalette = () => {
 
 const lockColor = ({ target }) => {
   blocks[target.id].locked = !blocks[target.id].locked;
-  console.log($(target));
+};
+
+const createProject = e => {
+  e.preventDefault();
+  const projectName = $('#create-project-input').val();
+  fetch('/api/v1/projects', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name: projectName })
+  })
+    .then(response => response.json())
+    .catch(error => console.log(error));
+};
+
+const getProjects = () => {
+  fetch('/api/v1/projects')
+    .then(response => response.json())
+    .then(createProjectSelections)
+    .catch(error => console.log(error));
+};
+
+const createProjectSelections = projects => {
+  projects.forEach(project => {
+    $('#project-select').append(
+      `<option value=${project.name}>${project.name}</option>`
+    );
+  });
 };
 
 $(document).keyup(e => {
@@ -37,7 +63,10 @@ $(document).keyup(e => {
   }
 });
 
+$('#create-project-button').on('click', createProject);
+
 $('.lock-icon').on('click', lockColor);
 $(document).ready(() => {
   generatePalette();
+  getProjects();
 });
