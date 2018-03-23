@@ -15,49 +15,38 @@
   <header>
     <h1>Color Blocks</h1>
     <h5>Press the spacebar to generate color schemes</h5>
-    <form action="post" name="save-palette">
-      <input type="text" placeholder="Palette Name">
-      <button>Save Palette in:</button>
+    <form name="save-palette">
+      <input id="palette-name" type="text" placeholder="Palette Name">
+      <button id="save-palette-button">Save Palette to:</button>
     </form>
-    <select>
-      <option value="project_1">project 1</option>
+    <select id="project-select">
     </select>
-    <form action="post" name="create-project">
-      <input type="text" placeholder="create new project">
-      <button>Create New Project</button>
+    <form name="create-project">
+      <input id="create-project-input" type="text" placeholder="create new project">
+      <button id="create-project-button">Create New Project</button>
     </form>
   </header>
   <main>
     <section class="blocks-container">
-      <div class="color-block block-0" >
-        <div class="color-info">
-          <i class='lock-icon' id=0>lock-icon</i>
-          <b class="block-0-hex">#000</b>
-        </div>
+      <div class="color-block block-0">
+        <i class='lock-icon' id=0>lock-icon</i>
+        <b class="block-0-hex">#000</b>
       </div>
-      <div class="color-block block-1" >
-        <div class="color-info">
-          <i class='lock-icon' id=1>lock-icon</i>
-          <b class="block-1-hex">#000</b>
-        </div>
+      <div class="color-block block-1">
+        <i class='lock-icon' id=1>lock-icon</i>
+        <b class="block-1-hex">#000</b>
       </div>
-      <div class="color-block block-2" >
-        <div class="color-info">
-          <i class='lock-icon' id=2>lock-icon</i>
-          <b class="block-2-hex">#000</b>
-        </div>
+      <div class="color-block block-2">
+        <i class='lock-icon' id=2>lock-icon</i>
+        <b class="block-2-hex">#000</b>
       </div>
-      <div class="color-block block-3" >
-        <div class="color-info">
-          <i class='lock-icon' id=3>lock-icon</i>
-          <b class="block-3-hex">#000</b>
-        </div>
+      <div class="color-block block-3">
+        <i class='lock-icon' id=3>lock-icon</i>
+        <b class="block-3-hex">#000</b>
       </div>
-      <div class="color-block block-4" >
-        <div class="color-info">
-          <i class='lock-icon' id=4>lock-icon</i>
-          <b class="block-4-hex">#000</b>
-        </div>
+      <div class="color-block block-4">
+        <i class='lock-icon' id=4>lock-icon</i>
+        <b class="block-4-hex">#000</b>
       </div>
     </section>
   </main>
