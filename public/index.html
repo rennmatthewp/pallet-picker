@@ -15,12 +15,11 @@
   <header>
     <h1>Color Blocks</h1>
     <h5>Press the spacebar to generate color schemes</h5>
-    <form action="post" name="save-palette">
-      <input type="text" placeholder="Palette Name">
-      <button>Save Palette in:</button>
+    <form name="save-palette">
+      <input id="palette-name" type="text" placeholder="Palette Name">
+      <button id="save-palette-button">Save Palette to:</button>
     </form>
     <select id="project-select">
-      <option value="project_1">project 1</option>
     </select>
     <form name="create-project">
       <input id="create-project-input" type="text" placeholder="create new project">

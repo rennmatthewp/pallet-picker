@@ -52,19 +52,44 @@ const getProjects = () => {
 const createProjectSelections = projects => {
   projects.forEach(project => {
     $('#project-select').append(
-      `<option value=${project.name}>${project.name}</option>`
+      `<option value=${project.id}>${project.name}</option>`
     );
   });
 };
 
+const savePalette = e => {
+  e.preventDefault();
+  const project = $('#project-select').val();
+  const paletteName = $('#palette-name').val();
+  const palette = {
+    name: paletteName,
+    project_id: project,
+    palette: blocks
+  };
+
+  postData('/api/v1/palettes', palette)
+};
+
+const postData = (url, body) => {
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  })
+    .then(response => response.json())
+    .catch(console.log);
+};
+
 $(document).keyup(e => {
-  if (e.which === 32) {
+  if (e.which === 32 && e.target === document.body) {
     generatePalette();
   }
 });
 
 $('#create-project-button').on('click', createProject);
-
+$('#save-palette-button').on('click', savePalette);
 $('.lock-icon').on('click', lockColor);
 $(document).ready(() => {
   generatePalette();
