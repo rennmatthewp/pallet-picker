@@ -8,6 +8,7 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('palettes', table => {
       table.increments('id').primary();
       table.string('name', 50);
+      table.string('palette');
       table.integer('project_id').unsigned();
       table.foreign('project_id').references('projects.id');
       table.timestamps(true, true);
