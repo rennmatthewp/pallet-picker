@@ -12,14 +12,14 @@ router.get('/projects', (request, response) => {
       response.status(200).json(projects);
     })
     .catch(error => {
-      console.log(error);
+      response.status(500).json({ error });
     });
 });
 
 router.post('/projects', (request, response) => {
   const project = request.body;
-  for (let requiredParam of ['name']) {
-    if (!project[requiredParam]) {
+  for (let requiredParameter of ['name']) {
+    if (!project[requiredParameter]) {
       return response.status(422).send({
         error: `Expected format: { name: <String> }. Missing "${requiredParameter}" property.`
       });
@@ -32,7 +32,7 @@ router.post('/projects', (request, response) => {
       response.status(201).json({ id: project[0] });
     })
     .catch(error => {
-      response.status(500).json(error);
+      response.status(500).json({ error });
     });
 });
 
@@ -43,12 +43,11 @@ router.get('/palettes', (request, response) => {
     .then(palettes => {
       response.status(200).json(palettes);
     })
-    .catch(error => console.log(error));
+    .catch(error => response.status(500).json({ error }));
 });
 
 router.post('/palettes', (request, response) => {
   const palette = request.body;
-  console.log('router.post:', palette);
   for (let requiredParameter of ['name', 'palette', 'project_id']) {
     if (!palette[requiredParameter]) {
       return response.status(422).send({
@@ -62,7 +61,7 @@ router.post('/palettes', (request, response) => {
     .then(palette => {
       response.status(201).json({ id: palette[0] });
     })
-    .catch(error => response.status(500).json(error));
+    .catch(error => response.status(500).json({ error }));
 });
 
 module.exports = router;
