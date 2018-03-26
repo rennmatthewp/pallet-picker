@@ -32,17 +32,13 @@ const lockColor = ({ target }) => {
 
 const createProject = e => {
   e.preventDefault();
-  const projectName = $('#create-project-input').val();
-  fetch('/api/v1/projects', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ name: projectName })
-  })
-    .then(response => response.json())
-    .catch(error => console.log(error));
+  const name = $('#create-project-input').val();
+
+  postData('api/v1/projects', { name });
+  renderProjectOptions();
 };
 
-const getProjects = () => {
+const renderProjectOptions = () => {
   fetch('/api/v1/projects')
     .then(response => response.json())
     .then(createProjectSelections)
@@ -67,7 +63,7 @@ const savePalette = e => {
     palette: blocks
   };
 
-  postData('/api/v1/palettes', palette)
+  postData('/api/v1/palettes', palette);
 };
 
 const postData = (url, body) => {
@@ -79,7 +75,7 @@ const postData = (url, body) => {
     body: JSON.stringify(body)
   })
     .then(response => response.json())
-    .catch(console.log);
+    .catch(error => console.log(error));
 };
 
 $(document).keyup(e => {
@@ -93,5 +89,5 @@ $('#save-palette-button').on('click', savePalette);
 $('.lock-icon').on('click', lockColor);
 $(document).ready(() => {
   generatePalette();
-  getProjects();
+  renderProjectOptions();
 });
