@@ -46,6 +46,24 @@ router.get('/palettes', (request, response) => {
     .catch(error => response.status(500).json({ error }));
 });
 
+router.get('/palettes/:id', (request, response) => {
+  database('palettes')
+    .where('id', request.params.id)
+    .select()
+    .then(palette => {
+      if (palette) {
+        response.status(200).json(palette);
+      } else {
+        response.status(404).json({
+          error: `Could not find palette with id ${request.params.id}`
+        });
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    });
+});
+
 router.post('/palettes', (request, response) => {
   const palette = request.body;
   for (let requiredParameter of ['name', 'palette', 'project_id']) {

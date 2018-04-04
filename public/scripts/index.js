@@ -1,4 +1,4 @@
-const blocks = [
+const palette = [
   { color: '#FFF', locked: false },
   { color: '#FFF', locked: false },
   { color: '#FFF', locked: false },
@@ -15,7 +15,7 @@ const generateHexCode = () => {
   return hexCode;
 };
 
-const generatePalette = () => {
+const generatePalette = (blocks = palette) => {
   blocks.forEach((block, index) => {
     if (block.locked === false) {
       const hexCode = generateHexCode();
@@ -26,8 +26,14 @@ const generatePalette = () => {
   });
 };
 
+const renderSavedPalette = () => {
+  fetch('/api/v1/palettes/:id')
+    .then(response => resonse.json())
+    .then(console.log)
+}
+
 const lockColor = ({ target }) => {
-  blocks[target.id].locked = !blocks[target.id].locked;
+  palette[target.id].locked = !palette[target.id].locked;
 };
 
 const createProject = e => {
@@ -35,19 +41,21 @@ const createProject = e => {
   const name = $('#create-project-input').val();
 
   postData('api/v1/projects', { name });
-  renderProjectOptions();
+  getProjectOptions();
 };
 
-const renderProjectOptions = () => {
+const getProjectOptions = () => {
   fetch('/api/v1/projects')
     .then(response => response.json())
-    .then(createProjectSelections)
+    .then(renderProjectOptions)
     .catch(error => console.log(error));
 };
 
-const createProjectSelections = projects => {
+const renderProjectOptions = projects => {
+  const dropDown = $('#project-select');
+  dropDown.empty();
   projects.forEach(project => {
-    $('#project-select').append(
+    dropDown.append(
       `<option value=${project.id}>${project.name}</option>`
     );
   });
@@ -57,13 +65,13 @@ const savePalette = e => {
   e.preventDefault();
   const project = $('#project-select').val();
   const paletteName = $('#palette-name').val();
-  const palette = {
+  const savedPalette = {
     name: paletteName,
     project_id: project,
-    palette: blocks
+    palette
   };
 
-  postData('/api/v1/palettes', palette);
+  postData('/api/v1/palettes', savedPalette);
 };
 
 const postData = (url, body) => {
@@ -89,5 +97,5 @@ $('#save-palette-button').on('click', savePalette);
 $('.lock-icon').on('click', lockColor);
 $(document).ready(() => {
   generatePalette();
-  renderProjectOptions();
+  getProjectOptions();
 });
